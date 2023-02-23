@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 
@@ -20,6 +19,10 @@ const Home: NextPage = () => {
 
         <p className={styles.description}>
           <Link href="/secret">Go to Authenticated and Authorized Page</Link>
+        </p>
+
+        <p className={styles.description}>
+          <Link href="/not-secret">Go to Unauthed Page</Link>
         </p>
       </main>
     </div>
