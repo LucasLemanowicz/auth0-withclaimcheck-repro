@@ -24,21 +24,24 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   )
 }
 
-const BlankPage = () => null;
+const BlankPage: NextPage = () => null;
 
 interface ClaimCheckProps {
   claimCheck: (claim?: User) => boolean;
   returnTo: string;
 }
 
-export function withClaimCheck(Component: NextPage, claimCheckOptions: ClaimCheckProps) {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { user } = useAuth0();
+export function withClaimCheck(Component: NextPage, { claimCheck, returnTo }: ClaimCheckProps): NextPage {
+  const WithClaimCheckComponent: NextPage = () => {
+      const { user } = useAuth0();
 
-  if (claimCheckOptions.claimCheck(user)) {
-      return Component;
-  }
+      if (claimCheck(user)) {
+          return <Component />;
+      }
 
-  Router.push(claimCheckOptions.returnTo);
-  return BlankPage;
+      Router.push(returnTo);
+      return BlankPage;
+  };
+
+  return WithClaimCheckComponent;
 }
